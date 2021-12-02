@@ -3,11 +3,13 @@
 ***Traits***
 ```json
 "spoon": {
-    "Gold": 5,
-    "Silver": 10,
-    "Bronze": 15,
-    "Wooden": 30,
-    "Plastic": 40
+  "Diamond": 1,
+  "Platinum": 3,
+  "Gold": 5,
+  "Silver": 10,
+  "Bronze": 15,
+  "Wooden": 8,
+  "Plastic": 38,
 },
 "role": {
     "Operators": 1,
