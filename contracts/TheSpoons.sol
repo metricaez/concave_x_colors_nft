@@ -342,7 +342,12 @@ contract TheSpoons is ERC721Enumerable, Ownable {
     // }
 
     function generateSVGImage(uint256 tokenId) internal view returns (string memory) {
-      return ITheSpoonsSVG(THE_SPOONS_SVG).generateSVGImage(tokenId);
+      string memory hexCode = TheColorsSpoons(THE_COLORS).getHexColor(tokenId);
+      // uint32 r = TheColorsSpoons(THE_COLORS).getRed(tokenId);
+      // uint32 g = TheColorsSpoons(THE_COLORS).getGreen(tokenId);
+      // uint32 b = TheColorsSpoons(THE_COLORS).getBlue(tokenId);
+
+      return ITheSpoonsSVG(THE_SPOONS_SVG).generateSVGImage(tokenId,hexCode);
     }
 
     // function generateSVGPartB(string memory pathD, uint8 strokeWidth, uint8 stepDuration, uint8 duration) internal view returns (bytes memory) {

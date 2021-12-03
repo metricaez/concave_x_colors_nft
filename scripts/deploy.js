@@ -24,8 +24,11 @@ async function main() {
 
 
   await colors.setSpoonsAddress(spoons.address);
-  await spoons.mintSpoon(1);
-  const svg = await spoons.getTokenSVG(1);
+  await spoons.mintSpoon(2);
+  let svg = await spoons.getTokenSVG(1);
+  console.log(svg)
+  console.log('---')
+  svg = await spoons.getTokenSVG(2);
   console.log(svg)
   // await greeter.deployed();
   console.log('passed')
