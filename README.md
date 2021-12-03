@@ -1,5 +1,15 @@
 # Concave Spoons
 
+To be as faithfull as possible to the original ***TheColors*** the aquitecture of ***ConcaveSpoons*** will be the following:
+
+ - We maintain `TheColors` NFT contract as is with the following minor exception: minting cannot be done directly in that contract - but instead minting is done by `TheSpoons` contract. (corollary: upong minting a `TheSpoons` you also get a `TheColors`!)
+ - The take `TheSpirals` contract and transform it into `TheSpoons`
+
+The original `TheColors` contract is in `TheColors`. The original `TheSpirals` contract is in `TheSpirals` contract. Our edited version of `TheColors` contract is `TheColorsSpoons`. Our new implementation of `TheSpirals` is in `TheSpoons`.
+
+The deploy script is in `scripts/deploy.js` (can be deployed with command `yarn deploy`).
+
+
 ***Traits***
 ```json
 "spoon": {

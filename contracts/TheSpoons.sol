@@ -6,15 +6,16 @@ pragma abicoder v2;
 import '@openzeppelin/contracts/access/Ownable.sol';
 import '@openzeppelin/contracts/utils/Strings.sol';
 import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
-import 'base64-sol/base64.sol';
-import './TheColors.sol';
+// import 'base64-sol/base64.sol';
+import './base64.sol';
+import './TheColorsSpoons.sol';
 import './INFTOwner.sol';
 
 /**
  * @title TheSpirals contract
  * @dev Extends ERC721 Non-Fungible Token Standard basic implementation
  */
-contract TheSpirals is ERC721Enumerable, Ownable {
+contract TheSpoons is ERC721Enumerable, Ownable {
     using Strings for uint256;
     using Strings for uint32;
     using Strings for uint8;
@@ -32,6 +33,9 @@ contract TheSpirals is ERC721Enumerable, Ownable {
     address constant public THE_COLORS = address(0x9fdb31F8CE3cB8400C7cCb2299492F2A498330a4);
 
     mapping(uint256 => bool) public hasClaimed;
+
+    // @ TODO: max supply?
+    uint256 constant public MAX_SPOONS = 4317;
 
     constructor() ERC721("The Spirals (thecolors.art)", "SPIRALS") {}
 
@@ -159,15 +163,41 @@ contract TheSpirals is ERC721Enumerable, Ownable {
         require(!hasClaimed[tokenId], "Color has already claimed their Spiral.");
         require(msg.sender == tokenOwner, "Only token owner can mint their Spiral.");
 
-        uint32 r = TheColors(THE_COLORS).getRed(tokenId);
-        uint32 g = TheColors(THE_COLORS).getGreen(tokenId);
-        uint32 b = TheColors(THE_COLORS).getBlue(tokenId);
+        uint32 r = TheColorsSpoons(THE_COLORS).getRed(tokenId);
+        uint32 g = TheColorsSpoons(THE_COLORS).getGreen(tokenId);
+        uint32 b = TheColorsSpoons(THE_COLORS).getBlue(tokenId);
 
         _safeMint(msg.sender, tokenId);
         generateColorSpectrum(tokenId, r, g, b);
 
         hasClaimed[tokenId] = true;
     }
+    /**
+    * Mints The Spirals
+    */
+    function mintSpoon(uint256 numberOfTokens) public {
+      require(numberOfTokens < 3, "Max 2 tokens per mint");
+      require(totalSupply() + numberOfTokens <= MAX_SPOONS, "Purchase would exceed max supply of Colors");
+
+
+
+      uint256 mintIndex;
+      for(uint i = 0; i < numberOfTokens; i++) {
+        mintIndex = totalSupply();
+
+        TheColorsSpoons(THE_COLORS).mintBySpoon(msg.sender, mintIndex);
+
+        uint32 r = TheColorsSpoons(THE_COLORS).getRed(mintIndex);
+        uint32 g = TheColorsSpoons(THE_COLORS).getGreen(mintIndex);
+        uint32 b = TheColorsSpoons(THE_COLORS).getBlue(mintIndex);
+
+        _safeMint(msg.sender, mintIndex);
+        generateColorSpectrum(mintIndex, r, g, b);
+      }
+
+
+    }
+
 
     function mintBatch(uint256[] memory tokenIds) public {
       for (uint256 i = 0; i < tokenIds.length; i++) {
@@ -176,7 +206,7 @@ contract TheSpirals is ERC721Enumerable, Ownable {
     }
 
     function generateNameDescription(uint256 tokenId) internal view returns (string memory) {
-        string memory hexCode = TheColors(THE_COLORS).getHexColor(tokenId);
+        string memory hexCode = TheColorsSpoons(THE_COLORS).getHexColor(tokenId);
         return string(
             abi.encodePacked(
                 '"external_url":"https://thecolors.art",',
@@ -192,10 +222,10 @@ contract TheSpirals is ERC721Enumerable, Ownable {
     }
 
     function generateAttributes(uint256 tokenId) internal view returns (string memory) {
-        string memory hexCode = TheColors(THE_COLORS).getHexColor(tokenId);
-        uint32 r = TheColors(THE_COLORS).getRed(tokenId);
-        uint32 g = TheColors(THE_COLORS).getGreen(tokenId);
-        uint32 b = TheColors(THE_COLORS).getBlue(tokenId);
+        string memory hexCode = TheColorsSpoons(THE_COLORS).getHexColor(tokenId);
+        uint32 r = TheColorsSpoons(THE_COLORS).getRed(tokenId);
+        uint32 g = TheColorsSpoons(THE_COLORS).getGreen(tokenId);
+        uint32 b = TheColorsSpoons(THE_COLORS).getBlue(tokenId);
 
         SpiralTraits memory traits = generateTraits(tokenId, r, g, b);
 
@@ -280,10 +310,10 @@ contract TheSpirals is ERC721Enumerable, Ownable {
     }
 
     function generateSVGImage(uint256 tokenId) internal view returns (string memory) {
-        string memory hexCode = TheColors(THE_COLORS).getHexColor(tokenId);
-        uint32 r = TheColors(THE_COLORS).getRed(tokenId);
-        uint32 g = TheColors(THE_COLORS).getGreen(tokenId);
-        uint32 b = TheColors(THE_COLORS).getBlue(tokenId);
+        string memory hexCode = TheColorsSpoons(THE_COLORS).getHexColor(tokenId);
+        uint32 r = TheColorsSpoons(THE_COLORS).getRed(tokenId);
+        uint32 g = TheColorsSpoons(THE_COLORS).getGreen(tokenId);
+        uint32 b = TheColorsSpoons(THE_COLORS).getBlue(tokenId);
 
         SpiralTraits memory traits = generateTraits(tokenId, r, g, b);
         string memory pathD = generatePathD(traits.direction, traits.spiralSize);
