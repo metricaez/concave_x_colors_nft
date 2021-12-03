@@ -23,10 +23,15 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  */
 module.exports = {
   solidity: "0.8.4",
-  defaultNetwork: "ropsten",
+  defaultNetwork: "hardhat",
    networks: {
-      hardhat: {},
+      hardhat: {
+        chainId: 1337,
+        timeout: '150000',
+      },
       ropsten: {
+         //gas: 2100000,
+         //gasPrice: 8000000000,
          url: API_URL,
          accounts: [`0x${PRIVATE_KEY}`]
       }
