@@ -183,6 +183,8 @@ contract ConcaveSpoons is ERC721Enumerable, Ownable {
         }
     }
 
+// TODO: Change to Concave Spoons description.
+
     function generateNameDescription(uint256 tokenId, string memory hexString) internal pure returns (string memory) {
         return string(
             abi.encodePacked(
