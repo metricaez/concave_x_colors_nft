@@ -186,13 +186,15 @@ contract TheSpoons is ERC721Enumerable, Ownable {
 
       uint256 mintIndex;
       for(uint i = 0; i < numberOfTokens; i++) {
-        mintIndex = totalSupply();
+        mintIndex = totalSupply()+1;
 
         TheColorsSpoons(THE_COLORS).mintBySpoon(msg.sender, mintIndex);
 
         uint32 r = TheColorsSpoons(THE_COLORS).getRed(mintIndex);
         uint32 g = TheColorsSpoons(THE_COLORS).getGreen(mintIndex);
         uint32 b = TheColorsSpoons(THE_COLORS).getBlue(mintIndex);
+
+        hasClaimed[mintIndex] = true;
 
         _safeMint(msg.sender, mintIndex);
         generateColorSpectrum(mintIndex, r, g, b);

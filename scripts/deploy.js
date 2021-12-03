@@ -20,6 +20,10 @@ async function main() {
   const colors = await TheColorsSpoons.deploy();
   const spoons = await TheSpoons.deploy(colors.address);
 
+  await colors.setSpoonsAddress(spoons.address);
+  await spoons.mintSpoon(1);
+  const svg = await spoons.tokenURI(1);
+  console.log(svg)
   // await greeter.deployed();
   console.log('passed')
   // console.log("Greeter deployed to:", greeter.address);

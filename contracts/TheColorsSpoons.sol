@@ -176,6 +176,8 @@ contract TheColorsSpoons is ERC721Enumerable, Ownable {
         }
     }
     function mintBySpoon(address tokenOwner, uint256 mintIndex) public onlySpoon {
+        // console.log(mintIndex);
+        // console.log(totalSupply());
         require(mintIndex > totalSupply(), "Enumeration Error");
         _safeMint(tokenOwner, mintIndex);
         generateRandomHexColor(mintIndex);
