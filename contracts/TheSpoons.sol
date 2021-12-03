@@ -30,14 +30,17 @@ contract TheSpoons is ERC721Enumerable, Ownable {
 
     string public PROVENANCE_HASH = "";
 
-    address constant public THE_COLORS = address(0x9fdb31F8CE3cB8400C7cCb2299492F2A498330a4);
+    // address constant public THE_COLORS = address(0x9fdb31F8CE3cB8400C7cCb2299492F2A498330a4);
+    address public THE_COLORS;
 
     mapping(uint256 => bool) public hasClaimed;
 
     // @ TODO: max supply?
     uint256 constant public MAX_SPOONS = 4317;
 
-    constructor() ERC721("The Spirals (thecolors.art)", "SPIRALS") {}
+    constructor(address _THE_COLORS) ERC721("The Spoons (Concave)", "SPOONS") {
+      THE_COLORS = _THE_COLORS;
+    }
 
     function tokenURI(uint256 tokenId) public view virtual override(ERC721) returns (string memory) {
         require(hasClaimed[tokenId], "ERC721Metadata: URI query for nonexistent token");

@@ -16,7 +16,9 @@ async function main() {
   // We get the contract to deploy
   const TheSpoons = await hre.ethers.getContractFactory("TheSpoons");
   const TheColorsSpoons = await hre.ethers.getContractFactory("TheColorsSpoons");
-  // const spia = await Greeter.deploy("Hello, Hardhat!");
+
+  const colors = await TheColorsSpoons.deploy();
+  const spoons = await TheSpoons.deploy(colors.address);
 
   // await greeter.deployed();
   console.log('passed')
