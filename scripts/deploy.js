@@ -16,9 +16,12 @@ async function main() {
   // We get the contract to deploy
   const TheSpoons = await hre.ethers.getContractFactory("TheSpoons");
   const TheColorsSpoons = await hre.ethers.getContractFactory("TheColorsSpoons");
+  const TheSpoonsSVG = await hre.ethers.getContractFactory("TheSpoonsSVG");
 
   const colors = await TheColorsSpoons.deploy();
-  const spoons = await TheSpoons.deploy(colors.address);
+  const spoonssvg = await TheSpoonsSVG.deploy();
+  const spoons = await TheSpoons.deploy(colors.address,spoonssvg.address);
+
 
   await colors.setSpoonsAddress(spoons.address);
   await spoons.mintSpoon(1);

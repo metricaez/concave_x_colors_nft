@@ -10,6 +10,7 @@ import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
 import './base64.sol';
 import './TheColorsSpoons.sol';
 import './INFTOwner.sol';
+import './ITheSpoonsSVG.sol';
 
 /**
  * @title TheSpirals contract
@@ -32,14 +33,16 @@ contract TheSpoons is ERC721Enumerable, Ownable {
 
     // address constant public THE_COLORS = address(0x9fdb31F8CE3cB8400C7cCb2299492F2A498330a4);
     address public THE_COLORS;
+    address public THE_SPOONS_SVG;
 
     mapping(uint256 => bool) public hasClaimed;
 
     // @ TODO: max supply?
     uint256 constant public MAX_SPOONS = 4317;
 
-    constructor(address _THE_COLORS) ERC721("The Spoons (Concave)", "SPOONS") {
+    constructor(address _THE_COLORS, address _THE_SPOONS_SVG) ERC721("The Spoons (Concave)", "SPOONS") {
       THE_COLORS = _THE_COLORS;
+      THE_SPOONS_SVG = _THE_SPOONS_SVG;
     }
 
     function tokenURI(uint256 tokenId) public view virtual override(ERC721) returns (string memory) {
@@ -314,134 +317,138 @@ contract TheSpoons is ERC721Enumerable, Ownable {
       }
     }
 
+    // function generateSVGImageOLD(uint256 tokenId) internal view returns (string memory) {
+    //     string memory hexCode = TheColorsSpoons(THE_COLORS).getHexColor(tokenId);
+    //     uint32 r = TheColorsSpoons(THE_COLORS).getRed(tokenId);
+    //     uint32 g = TheColorsSpoons(THE_COLORS).getGreen(tokenId);
+    //     uint32 b = TheColorsSpoons(THE_COLORS).getBlue(tokenId);
+    //
+    //     SpiralTraits memory traits = generateTraits(tokenId, r, g, b);
+    //     string memory pathD = generatePathD(traits.direction, traits.spiralSize);
+    //
+    //     bytes memory svgPartA = generateSVGPartA(tokenId, r, g, b, pathD, traits.strokeWidth, traits.stepDuration);
+    //     bytes memory svgPartB = generateSVGPartB(pathD, traits.strokeWidth, traits.stepDuration, traits.duration);
+    //
+    //     return string(
+    //         abi.encodePacked(
+    //           '<svg fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500" style="background-color:',
+    //           hexCode,
+    //           '">',
+    //           svgPartA,
+    //           svgPartB,
+    //           '</svg>'
+    //         )
+    //     );
+    // }
+
     function generateSVGImage(uint256 tokenId) internal view returns (string memory) {
-        string memory hexCode = TheColorsSpoons(THE_COLORS).getHexColor(tokenId);
-        uint32 r = TheColorsSpoons(THE_COLORS).getRed(tokenId);
-        uint32 g = TheColorsSpoons(THE_COLORS).getGreen(tokenId);
-        uint32 b = TheColorsSpoons(THE_COLORS).getBlue(tokenId);
-
-        SpiralTraits memory traits = generateTraits(tokenId, r, g, b);
-        string memory pathD = generatePathD(traits.direction, traits.spiralSize);
-
-        bytes memory svgPartA = generateSVGPartA(tokenId, r, g, b, pathD, traits.strokeWidth, traits.stepDuration);
-        bytes memory svgPartB = generateSVGPartB(pathD, traits.strokeWidth, traits.stepDuration, traits.duration);
-
-        return string(
-            abi.encodePacked(
-              '<svg fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500" style="background-color:',
-              hexCode,
-              '">',
-              svgPartA,
-              svgPartB,
-              '</svg>'
-            )
-        );
+      return ITheSpoonsSVG(THE_SPOONS_SVG).generateSVGImage(tokenId);
     }
 
-    function generateSVGPartB(string memory pathD, uint8 strokeWidth, uint8 stepDuration, uint8 duration) internal view returns (bytes memory) {
-      bytes memory bufferA = abi.encodePacked(
-              '<animate id="step5" begin="step4.end+0.5s" attributeType="XML" attributeName="stroke-dasharray" to="3217" dur="',
-              stepDuration.toString(),
-              's" fill="freeze" />',
-              '<animate id="step6" begin="step5.end+0.5s" attributeType="XML" attributeName="stroke-dasharray" to="6434" dur="',
-              stepDuration.toString(),
-              's" fill="freeze" />',
-              '</path>'
-              '<path id="spiral" stroke-dasharray="0" stroke-dashoffset="0" stroke="#0000ff" stroke-width="'
-        );
+    // function generateSVGPartB(string memory pathD, uint8 strokeWidth, uint8 stepDuration, uint8 duration) internal view returns (bytes memory) {
+    //   bytes memory bufferA = abi.encodePacked(
+    //           '<animate id="step5" begin="step4.end+0.5s" attributeType="XML" attributeName="stroke-dasharray" to="3217" dur="',
+    //           stepDuration.toString(),
+    //           's" fill="freeze" />',
+    //           '<animate id="step6" begin="step5.end+0.5s" attributeType="XML" attributeName="stroke-dasharray" to="6434" dur="',
+    //           stepDuration.toString(),
+    //           's" fill="freeze" />',
+    //           '</path>'
+    //           '<path id="spiral" stroke-dasharray="0" stroke-dashoffset="0" stroke="#0000ff" stroke-width="'
+    //     );
+    //
+    //     bytes memory bufferB = abi.encodePacked(
+    //           strokeWidth.toString(),
+    //           '" d="',
+    //           pathD,
+    //           '">'
+    //           '<animate id="start" attributeType="XML" attributeName="stroke" begin="0.5s;end.end+0.5s" to="#0000ff" dur="',
+    //           duration.toString(),
+    //           '.5s" fill="freeze" />',
+    //           '<animate attributeType="XML" attributeName="stroke-dashoffset" begin="start.begin" to="6434" dur="',
+    //           duration.toString()
+    //     );
+    //
+    //     bytes memory bufferC = abi.encodePacked(
+    //           's" fill="freeze" />',
+    //           '<animate attributeType="XML" attributeName="stroke-dasharray" begin="start.begin" to="6434" dur="',
+    //           duration.toString(),
+    //           's" fill="freeze" />',
+    //           '<animate attributeType="XML" attributeName="stroke-dashoffset" begin="step6.end+1" to="0" dur="0.3s" fill="freeze" />',
+    //           '<animate id="end" attributeType="XML" attributeName="stroke-dasharray" begin="step6.end+1" to="0" dur="0.3s" fill="freeze" />',
+    //           '</path>'
+    //     );
+    //
+    //     return abi.encodePacked(bufferA, bufferB, bufferC);
+    // }
 
-        bytes memory bufferB = abi.encodePacked(
-              strokeWidth.toString(),
-              '" d="',
-              pathD,
-              '">'
-              '<animate id="start" attributeType="XML" attributeName="stroke" begin="0.5s;end.end+0.5s" to="#0000ff" dur="',
-              duration.toString(),
-              '.5s" fill="freeze" />',
-              '<animate attributeType="XML" attributeName="stroke-dashoffset" begin="start.begin" to="6434" dur="',
-              duration.toString()
-        );
+    // function generateSVGPartA(uint256 tokenId, uint32 r, uint32 g, uint32 b, string memory pathD, uint8 strokeWidth, uint8 stepDuration)
+    //   internal view
+    //   returns (bytes memory)
+    // {
+    //     (string memory rHexCode, string memory gHexCode, string memory bHexCode) = generateColorSpectrum(tokenId, r, g, b);
+    //
+    //     bytes memory bufferA = abi.encodePacked(
+    //           '<path id="spiral" stroke-dasharray="6434" stroke-dashoffset="6434" stroke="',
+    //           rHexCode,
+    //           '" stroke-width="',
+    //           strokeWidth.toString(),
+    //           '" d="',
+    //           pathD,
+    //           '">',
+    //           '<animate begin="start.begin" attributeType="XML" attributeName="stroke" to="',
+    //           rHexCode,
+    //           '" dur="0.3s" fill="freeze" />'
+    //     );
+    //
+    //     bytes memory bufferB = abi.encodePacked(
+    //           '<animate id="step1" begin="start.begin+0.5s" attributeType="XML" attributeName="stroke-dashoffset"  to="0" dur="',
+    //           stepDuration.toString(),
+    //           's" fill="freeze" />'
+    //           '<animate id="step2" begin="step1.end+0.5s" attributeType="XML" attributeName="stroke-dasharray" to="0" dur="',
+    //           stepDuration.toString(),
+    //           's" fill="freeze" />'
+    //           '<animate begin="start.begin+6.5s" attributeType="XML" attributeName="stroke" to="',
+    //           gHexCode,
+    //           '" dur="0.3s" fill="freeze" />'
+    //     );
+    //
+    //     bytes memory bufferC = abi.encodePacked(
+    //           '<animate id="step3" begin="step2.end+1s" attributeType="XML" attributeName="stroke-dasharray" to="1608" dur="',
+    //           stepDuration.toString(),
+    //           's" fill="freeze" />',
+    //           '<animate id="step4" begin="step3.end+0.5s" attributeType="XML" attributeName="stroke-dashoffset" to="6434" dur="',
+    //           stepDuration.toString(),
+    //           's" fill="freeze" />',
+    //           '<animate begin="start.begin+13s" attributeType="XML" attributeName="stroke" to="',
+    //           bHexCode,
+    //           '" dur="0.3s" fill="freeze" />'
+    //     );
+    //
+    //     return abi.encodePacked(bufferA, bufferB, bufferC);
+    // }
 
-        bytes memory bufferC = abi.encodePacked(
-              's" fill="freeze" />',
-              '<animate attributeType="XML" attributeName="stroke-dasharray" begin="start.begin" to="6434" dur="',
-              duration.toString(),
-              's" fill="freeze" />',
-              '<animate attributeType="XML" attributeName="stroke-dashoffset" begin="step6.end+1" to="0" dur="0.3s" fill="freeze" />',
-              '<animate id="end" attributeType="XML" attributeName="stroke-dasharray" begin="step6.end+1" to="0" dur="0.3s" fill="freeze" />',
-              '</path>'
-        );
-
-        return abi.encodePacked(bufferA, bufferB, bufferC);
-    }
-
-    function generateSVGPartA(uint256 tokenId, uint32 r, uint32 g, uint32 b, string memory pathD, uint8 strokeWidth, uint8 stepDuration)
-      internal view
-      returns (bytes memory)
-    {
-        (string memory rHexCode, string memory gHexCode, string memory bHexCode) = generateColorSpectrum(tokenId, r, g, b);
-
-        bytes memory bufferA = abi.encodePacked(
-              '<path id="spiral" stroke-dasharray="6434" stroke-dashoffset="6434" stroke="',
-              rHexCode,
-              '" stroke-width="',
-              strokeWidth.toString(),
-              '" d="',
-              pathD,
-              '">',
-              '<animate begin="start.begin" attributeType="XML" attributeName="stroke" to="',
-              rHexCode,
-              '" dur="0.3s" fill="freeze" />'
-        );
-
-        bytes memory bufferB = abi.encodePacked(
-              '<animate id="step1" begin="start.begin+0.5s" attributeType="XML" attributeName="stroke-dashoffset"  to="0" dur="',
-              stepDuration.toString(),
-              's" fill="freeze" />'
-              '<animate id="step2" begin="step1.end+0.5s" attributeType="XML" attributeName="stroke-dasharray" to="0" dur="',
-              stepDuration.toString(),
-              's" fill="freeze" />'
-              '<animate begin="start.begin+6.5s" attributeType="XML" attributeName="stroke" to="',
-              gHexCode,
-              '" dur="0.3s" fill="freeze" />'
-        );
-
-        bytes memory bufferC = abi.encodePacked(
-              '<animate id="step3" begin="step2.end+1s" attributeType="XML" attributeName="stroke-dasharray" to="1608" dur="',
-              stepDuration.toString(),
-              's" fill="freeze" />',
-              '<animate id="step4" begin="step3.end+0.5s" attributeType="XML" attributeName="stroke-dashoffset" to="6434" dur="',
-              stepDuration.toString(),
-              's" fill="freeze" />',
-              '<animate begin="start.begin+13s" attributeType="XML" attributeName="stroke" to="',
-              bHexCode,
-              '" dur="0.3s" fill="freeze" />'
-        );
-
-        return abi.encodePacked(bufferA, bufferB, bufferC);
-    }
-
-    function generatePathD(uint8 direction, uint8 spiralSize) internal view returns (string memory) {
-        bytes memory pathD = abi.encodePacked("M250,250 a5,");
-
-        for (uint i = 0; i < 38; i++) {
-          pathD = abi.encodePacked(
-            pathD,
-            direction.toString(),
-            ' 0 1,1 ',
-            i % 2 == 1 ? '-' : '',
-            ((i + 2) * spiralSize).toString(),
-            ',0 5,'
-          );
-        }
-
-        return string(
-          abi.encodePacked(
-            pathD,
-            '0'
-          )
-        );
-    }
+    // function generatePathD(uint8 direction, uint8 spiralSize) internal view returns (string memory) {
+    //     bytes memory pathD = abi.encodePacked("M250,250 a5,");
+    //
+    //     for (uint i = 0; i < 38; i++) {
+    //       pathD = abi.encodePacked(
+    //         pathD,
+    //         direction.toString(),
+    //         ' 0 1,1 ',
+    //         i % 2 == 1 ? '-' : '',
+    //         ((i + 2) * spiralSize).toString(),
+    //         ',0 5,'
+    //       );
+    //     }
+    //
+    //     return string(
+    //       abi.encodePacked(
+    //         pathD,
+    //         '0'
+    //       )
+    //     );
+    // }
 
     function generateTraits(uint256 tokenId, uint32 r, uint32 g, uint32 b) internal view returns (SpiralTraits memory) {
         SpiralTraits memory traits;
