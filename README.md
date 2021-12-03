@@ -33,7 +33,7 @@ Also, we can talk on the discord but lets also log important stuff we have done 
   "Gold": 5,
   "Silver": 10,
   "Bronze": 15,
-  "Wooden": 8,
+  "Wooden": 28,
   "Plastic": 38,
 },
 "role": {
