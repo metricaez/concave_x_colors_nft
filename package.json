@@ -2,12 +2,14 @@
   "name": "hardhat-project",
   "dependencies": {
     "@openzeppelin/contracts": "^4.4.0",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "truffle-contract-size": "^2.0.1"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.3",
     "base64-sol": "^1.1.0",
     "ethers": "^5.5.2",
-    "hardhat": "^2.7.0"
+    "hardhat": "^2.7.0",
+    "hardhat-contract-sizer": "^2.1.1"
   }
 }
