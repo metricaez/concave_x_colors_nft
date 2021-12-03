@@ -387,14 +387,38 @@ contract TheSpoons is ERC721Enumerable, Ownable {
     //   }
     // }
     function getRole(uint8 strokeWidth) internal view returns (string memory) {
-      if (strokeWidth < 3) {
-        return "Thin";
-      } else if (strokeWidth < 5) {
-        return "Semi-Thin";
-      } else if (strokeWidth < 7) {
-        return "Semi-Thick";
+      if (strokeWidth < 51) {
+        return "Miner";
+      } else if (strokeWidth < 86) {
+        return "Seismologist";
+      } else if (strokeWidth < 117) {
+        return "Foreman";
+      } else if (strokeWidth < 142) {
+        return "Genesis";
+      } else if (strokeWidth < 163) {
+        return "Hentai";
+      } else if (strokeWidth < 181) {
+        return "Spelunker";
+      } else if (strokeWidth < 196) {
+        return "Explorer";
+      } else if (strokeWidth < 209) {
+        return "Documentator";
+      } else if (strokeWidth < 219) {
+        return "Witness";
+      } else if (strokeWidth < 228) {
+        return "Engineer";
+      } else if (strokeWidth < 235) {
+        return "Cave Troll";
+      } else if (strokeWidth < 242) {
+        return "Operator";
+      } else if (strokeWidth < 247) {
+        return "Inspector";
+      } else if (strokeWidth < 251) {
+        return "MOTW";
+      } else if (strokeWidth < 253) {
+        return "Super Mod";
       } else {
-        return "Thick";
+        return "Core";
       }
     }
 
