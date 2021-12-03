@@ -54,6 +54,13 @@ Also, we can talk on the discord but lets also log important stuff we have done 
 },
 ```
 
+
+**Metric**
+
+Did in TheSpoonsM a first approach for traits rarity, I used tokende plus add of r g b to generate a uint8 which is ranges between 0 to 255. This is done in "generateSpoonTraits"
+Then in "getMaterial" I mapped those 255 to ranges that reflect probabilit, so only 0, 1 and 2 will give you Diamond, then 3 to 7 will give you Platinum and so.
+
+
 # Basic Sample Hardhat Project
 
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
