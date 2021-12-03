@@ -1,6 +1,10 @@
 {
   "name": "hardhat-project",
+  "scripts": {
+    "deploy": "npx hardhat run scripts/deploy.js"
+  },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.4.0"
+    "@openzeppelin/contracts": "^4.4.0",
+    "hardhat": "^2.7.0"
   }
 }

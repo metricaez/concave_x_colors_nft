@@ -168,6 +168,32 @@ contract TheSpirals is ERC721Enumerable, Ownable {
 
         hasClaimed[tokenId] = true;
     }
+    /**
+    * Mints The Spirals
+    */
+    function mintSpoon(uint256 numberOfTokens) public {
+      require(numberOfTokens < 3, "Max 2 tokens per mint");
+      require(totalSupply() + numberOfTokens <= MAX_COLORS, "Purchase would exceed max supply of Colors");
+
+
+
+      uint256 mintIndex;
+      for(uint i = 0; i < numberOfTokens; i++) {
+        mintIndex = totalSupply();
+
+        TheColors(THE_COLORS).mintBySpoon(msg.sender, mintIndex);
+
+        uint32 r = TheColors(THE_COLORS).getRed(mintIndex);
+        uint32 g = TheColors(THE_COLORS).getGreen(mintIndex);
+        uint32 b = TheColors(THE_COLORS).getBlue(mintIndex);
+
+        _safeMint(msg.sender, mintIndex);
+        generateColorSpectrum(mintIndex, r, g, b);
+      }
+
+
+    }
+
 
     function mintBatch(uint256[] memory tokenIds) public {
       for (uint256 i = 0; i < tokenIds.length; i++) {

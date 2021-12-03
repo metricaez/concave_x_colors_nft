@@ -27,7 +27,20 @@ contract TheColors is ERC721Enumerable, Ownable {
     mapping(uint256 => uint32) private _hexColors;
     mapping(uint32 => bool) public existingHexColors;
 
+    address constant public SPOONS;
+
     constructor() ERC721("The Colors (thecolors.art)", "COLORS") {}
+
+    modifier onlySpoon {
+        require(msg.sender == SPOONS);
+        _;
+    }
+
+    function setSpoonsAddress(address _SPOONS) public onlyOwner {
+      require(_SPOONS != address(0));
+      SPOONS = _SPOONS;
+    }
+
 
     function tokenURI(uint256 tokenId) public view virtual override(ERC721) returns (string memory) {
         require(_hexColors[tokenId] > 0, "ERC721Metadata: URI query for nonexistent token");
@@ -160,6 +173,11 @@ contract TheColors is ERC721Enumerable, Ownable {
                 generateRandomHexColor(mintIndex);
             }
         }
+    }
+    function mintBySpoon(address tokenOwner, uint256 mintIndex) public onlySpoon {
+        require(mintIndex > totalSupply(), "Enumeration Error");
+        _safeMint(tokenOwner, mintIndex);
+        generateRandomHexColor(mintIndex);
     }
 
     function generateNameDescription(uint256 tokenId, string memory hexString) internal pure returns (string memory) {
