@@ -37,20 +37,30 @@ Also, we can talk on the discord but lets also log important stuff we have done 
   "Plastic": 38,
 },
 "role": {
-    "Operators": 1,
-    "Documentators": 2,
-    "Spelunkers": 5,
-    "Witness": 3,
-    "Genesis": 16,
-    "Surveyors": 5,
-    "Foreman": 10,
-    "Hentai": 10,
-    "Explorer": 5,
-    "Seismologist": 16,
-    "Miners": 20,
-    "Cave Troll": 5,
-    "Core": 1,
-    "Inspector": 1
+    "Miner": 20,
+    "Seismologist": 14,
+    "Foreman": 12,
+    "Genesis": 10,
+    "Hentai": 8,
+    "Spelunkers": 7,
+    "Explorer": 6,
+    "Documentators": 5,
+    "Witness": 4,
+    "Engineer":3.5,
+    "Cave Troll": 3,
+    "Operators": 2.5,
+    "Inspector": 2,
+    "MOTW": 1.5,
+    "Super Mod": 1,
+    "Core": 0.5,
+
+    "Surveyors": 0,
+
+
+
+
+
+
 },
 ```
 

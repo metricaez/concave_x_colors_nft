@@ -21,13 +21,20 @@ contract TheSpoons is ERC721Enumerable, Ownable {
     using Strings for uint32;
     using Strings for uint8;
 
-    struct SpiralTraits {
-        uint8 direction;
-        uint8 strokeWidth;
-        uint8 spiralSize;
-        uint8 stepDuration;
-        uint8 duration;
+    // SPOON TRAITS
+    struct SpoonTraits {
+        uint8 material;
+        uint8 role;
     }
+
+    // struct SpiralTraits {
+    //     uint8 direction;
+    //     uint8 strokeWidth;
+    //     uint8 spiralSize;
+    //     uint8 stepDuration;
+    //     uint8 duration;
+    // }
+
 
     string public PROVENANCE_HASH = "";
 
@@ -229,42 +236,94 @@ contract TheSpoons is ERC721Enumerable, Ownable {
         );
     }
 
+    // function generateAttributes(uint256 tokenId) internal view returns (string memory) {
+    //     string memory hexCode = TheColorsSpoons(THE_COLORS).getHexColor(tokenId);
+    //     uint32 r = TheColorsSpoons(THE_COLORS).getRed(tokenId);
+    //     uint32 g = TheColorsSpoons(THE_COLORS).getGreen(tokenId);
+    //     uint32 b = TheColorsSpoons(THE_COLORS).getBlue(tokenId);
+    //
+    //     SpiralTraits memory traits = generateTraits(tokenId, r, g, b);
+    //
+    //     bytes memory buffer = abi.encodePacked(
+    //             '"attributes":[',
+    //             '{"trait_type":"Background color","value":"',
+    //             hexCode,
+    //             '"},',
+    //             '{"trait_type":"Type","value":"',
+    //             getType(traits.direction),
+    //             '"},',
+    //             '{"trait_type":"Stroke","value":"',
+    //             getStroke(traits.strokeWidth),
+    //             '"},'
+    //     );
+    //
+    //     return string(
+    //         abi.encodePacked(
+    //             buffer,
+    //             '{"trait_type":"Size","value":"',
+    //             getSize(traits.spiralSize),
+    //             '"},',
+    //             '{"trait_type":"Speed","value":"',
+    //             getSpeed(traits.stepDuration),
+    //             '"},',
+    //             '{"trait_type":"Duration","value":"',
+    //             traits.duration.toString(),
+    //             's"}',
+    //             ']'
+    //         )
+    //     );
+    // }
     function generateAttributes(uint256 tokenId) internal view returns (string memory) {
         string memory hexCode = TheColorsSpoons(THE_COLORS).getHexColor(tokenId);
         uint32 r = TheColorsSpoons(THE_COLORS).getRed(tokenId);
         uint32 g = TheColorsSpoons(THE_COLORS).getGreen(tokenId);
         uint32 b = TheColorsSpoons(THE_COLORS).getBlue(tokenId);
 
-        SpiralTraits memory traits = generateTraits(tokenId, r, g, b);
-
-        bytes memory buffer = abi.encodePacked(
-                '"attributes":[',
-                '{"trait_type":"Background color","value":"',
-                hexCode,
-                '"},',
-                '{"trait_type":"Type","value":"',
-                getType(traits.direction),
-                '"},',
-                '{"trait_type":"Stroke","value":"',
-                getStroke(traits.strokeWidth),
-                '"},'
-        );
+        SpoonTraits memory traits = generateTraits(tokenId, r, g, b);
 
         return string(
-            abi.encodePacked(
-                buffer,
-                '{"trait_type":"Size","value":"',
-                getSize(traits.spiralSize),
-                '"},',
-                '{"trait_type":"Speed","value":"',
-                getSpeed(traits.stepDuration),
-                '"},',
-                '{"trait_type":"Duration","value":"',
-                traits.duration.toString(),
-                's"}',
-                ']'
-            )
+          abi.encodePacked(
+                  '"attributes":[',
+                  '{"trait_type":"Background color","value":"',
+                  hexCode,
+                  '"},',
+                  '{"trait_type":"Material","value":"',
+                  getMaterial(traits.material),
+                  '"},',
+                  '{"trait_type":"Role","value":"',
+                  getRole(traits.role),
+                  '"},'
+          )
         );
+
+        // bytes memory buffer = abi.encodePacked(
+        //         '"attributes":[',
+        //         '{"trait_type":"Background color","value":"',
+        //         hexCode,
+        //         '"},',
+        //         '{"trait_type":"Material","value":"',
+        //         getMaterial(traits.material),
+        //         '"},',
+        //         '{"trait_type":"Role","value":"',
+        //         getRole(traits.role),
+        //         '"},'
+        // );
+        //
+        // return string(
+        //     abi.encodePacked(
+        //         buffer,
+        //         '{"trait_type":"Size","value":"',
+        //         getSize(traits.spiralSize),
+        //         '"},',
+        //         '{"trait_type":"Speed","value":"',
+        //         getSpeed(traits.stepDuration),
+        //         '"},',
+        //         '{"trait_type":"Duration","value":"',
+        //         traits.duration.toString(),
+        //         's"}',
+        //         ']'
+        //     )
+        // );
     }
 
     function getSpeed(uint8 stepDuration) internal view returns (string memory) {
@@ -293,7 +352,18 @@ contract TheSpoons is ERC721Enumerable, Ownable {
       }
     }
 
-    function getType(uint8 direction) internal view returns (string memory) {
+    // function getType(uint8 direction) internal view returns (string memory) {
+    //   if (direction == 2) {
+    //     return "Flat";
+    //   } else if (direction == 3) {
+    //     return "Semi-Flat";
+    //   } else if (direction == 4) {
+    //     return "Semi-Straight";
+    //   } else {
+    //     return "Straight";
+    //   }
+    // }
+    function getMaterial(uint8 direction) internal view returns (string memory) {
       if (direction == 2) {
         return "Flat";
       } else if (direction == 3) {
@@ -305,7 +375,18 @@ contract TheSpoons is ERC721Enumerable, Ownable {
       }
     }
 
-    function getStroke(uint8 strokeWidth) internal view returns (string memory) {
+    // function getStroke(uint8 strokeWidth) internal view returns (string memory) {
+    //   if (strokeWidth < 3) {
+    //     return "Thin";
+    //   } else if (strokeWidth < 5) {
+    //     return "Semi-Thin";
+    //   } else if (strokeWidth < 7) {
+    //     return "Semi-Thick";
+    //   } else {
+    //     return "Thick";
+    //   }
+    // }
+    function getRole(uint8 strokeWidth) internal view returns (string memory) {
       if (strokeWidth < 3) {
         return "Thin";
       } else if (strokeWidth < 5) {
@@ -343,11 +424,13 @@ contract TheSpoons is ERC721Enumerable, Ownable {
 
     function generateSVGImage(uint256 tokenId) internal view returns (string memory) {
       string memory hexCode = TheColorsSpoons(THE_COLORS).getHexColor(tokenId);
-      // uint32 r = TheColorsSpoons(THE_COLORS).getRed(tokenId);
-      // uint32 g = TheColorsSpoons(THE_COLORS).getGreen(tokenId);
-      // uint32 b = TheColorsSpoons(THE_COLORS).getBlue(tokenId);
+      uint32 r = TheColorsSpoons(THE_COLORS).getRed(tokenId);
+      uint32 g = TheColorsSpoons(THE_COLORS).getGreen(tokenId);
+      uint32 b = TheColorsSpoons(THE_COLORS).getBlue(tokenId);
 
-      return ITheSpoonsSVG(THE_SPOONS_SVG).generateSVGImage(tokenId,hexCode);
+      SpoonTraits memory traits = generateTraits(tokenId, r, g, b);
+      string memory role = getRole(traits.role);
+      return ITheSpoonsSVG(THE_SPOONS_SVG).generateSVGImage(tokenId,hexCode,role);
     }
 
     // function generateSVGPartB(string memory pathD, uint8 strokeWidth, uint8 stepDuration, uint8 duration) internal view returns (bytes memory) {
@@ -455,14 +538,23 @@ contract TheSpoons is ERC721Enumerable, Ownable {
     //     );
     // }
 
-    function generateTraits(uint256 tokenId, uint32 r, uint32 g, uint32 b) internal view returns (SpiralTraits memory) {
-        SpiralTraits memory traits;
+    // function generateTraits(uint256 tokenId, uint32 r, uint32 g, uint32 b) internal view returns (SpiralTraits memory) {
+    //     SpiralTraits memory traits;
+    //
+    //     traits.direction = uint8((_rng(tokenId, r + g + b) % 4) + 2);
+    //     traits.strokeWidth = uint8((_rng(tokenId, r) % 8) + 1);
+    //     traits.spiralSize = uint8((_rng(tokenId, g) % 6) + 5);
+    //     traits.stepDuration = uint8((_rng(tokenId, b) % 3) + 1);
+    //     traits.duration = uint8((_rng(tokenId, r + g) % 16) + 21);
+    //
+    //     return traits;
+    // }
+    function generateTraits(uint256 tokenId, uint32 r, uint32 g, uint32 b) internal view returns (SpoonTraits memory) {
+        SpoonTraits memory traits;
 
-        traits.direction = uint8((_rng(tokenId, r + g + b) % 4) + 2);
-        traits.strokeWidth = uint8((_rng(tokenId, r) % 8) + 1);
-        traits.spiralSize = uint8((_rng(tokenId, g) % 6) + 5);
-        traits.stepDuration = uint8((_rng(tokenId, b) % 3) + 1);
-        traits.duration = uint8((_rng(tokenId, r + g) % 16) + 21);
+        // UINT8 max value equals 255 so spoon is a randomb number between 0 and 255,
+        traits.material = uint8((_rng(tokenId, r + g + b)));
+        traits.role = uint8((_rng(tokenId, r + g + b)));
 
         return traits;
     }

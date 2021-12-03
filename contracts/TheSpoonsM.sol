@@ -21,13 +21,13 @@ contract TheSpoonsM is ERC721Enumerable, Ownable {
     using Strings for uint32;
     using Strings for uint8;
 
-    
-    // SPOON TRAITS 
+
+    // SPOON TRAITS
     struct SpoonTraits {
         uint8 spoon;
         uint8 role;
     }
-    
+
     struct SpiralTraits {
         uint8 direction;
         uint8 strokeWidth;
@@ -325,7 +325,7 @@ contract TheSpoonsM is ERC721Enumerable, Ownable {
     }
 
     function getMaterial (uint8 spoon) internal view returns (string memory) {
-      
+
       if (spoon < 3) {
         return "Diamond";
       } else if (spoon < 8) {
@@ -338,7 +338,7 @@ contract TheSpoonsM is ERC721Enumerable, Ownable {
         return "Bronze";
       } else if (spoon < 72) {
         return "Wood";
-      } 
+      }
       else {
         return "Plastic";
       }
@@ -374,7 +374,7 @@ contract TheSpoonsM is ERC721Enumerable, Ownable {
       // uint32 g = TheColorsSpoons(THE_COLORS).getGreen(tokenId);
       // uint32 b = TheColorsSpoons(THE_COLORS).getBlue(tokenId);
 
-      return ITheSpoonsSVG(THE_SPOONS_SVG).generateSVGImage(tokenId,hexCode);
+      return ITheSpoonsSVG(THE_SPOONS_SVG).generateSVGImage(tokenId,hexCode,"");
     }
 
     // function generateSVGPartB(string memory pathD, uint8 strokeWidth, uint8 stepDuration, uint8 duration) internal view returns (bytes memory) {
@@ -499,8 +499,8 @@ contract TheSpoonsM is ERC721Enumerable, Ownable {
 
         // UINT8 max value equals 255 so spoon is a randomb number between 0 and 255,
         traits.spoon = uint8((_rng(tokenId, r + g + b)));
-        
-        
+
+
         traits.role = uint8((_rng(tokenId, r + g + b)));
 
         return traits;
