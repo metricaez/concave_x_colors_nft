@@ -44,7 +44,7 @@ export const Minter = () => {
 
     const networkName = await web3.eth.net.getNetworkType()
     if (networkName === "main")   setNetwork("Mainnet")
-    else setNetwork(x)
+    else setNetwork(networkName)
 
     const contract = new web3.eth.Contract(contractABI, COLORS_CONTRACT);
     const colorsCount = await contract.methods.balanceOf(accounts[0]).call()
@@ -53,7 +53,7 @@ export const Minter = () => {
   }, []);
 
   if (address) {
-    if (colorsOwned == 0){
+    if (colorsOwned > 0){
       return (
         <div>
           <p className={"text-red-600 font-bold"}>{address} owns {colorsOwned} Colors NFT on {network}</p>
