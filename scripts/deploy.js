@@ -28,13 +28,13 @@ async function main() {
 
   // console.log('---')
 
-  let meta = await spoons.getTokenMetadata(1);
-  console.log(meta)
+  // let meta = await spoons.getTokenMetadata(1);
+  // console.log(meta)
   let svg = await spoons.getTokenSVG(1);
   console.log(svg)
   console.log('---')
-  meta = await spoons.getTokenMetadata(2);
-  console.log(meta)
+  // meta = await spoons.getTokenMetadata(2);
+  // console.log(meta)
   svg = await spoons.getTokenSVG(2);
   console.log(svg)
   // await greeter.deployed();
