@@ -7,8 +7,8 @@ import '@openzeppelin/contracts/access/Ownable.sol';
 import '@openzeppelin/contracts/utils/Strings.sol';
 import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
 import 'base64-sol/base64.sol';
-import './TheColors.sol';
-import './INFTOwner.sol';
+import '../legacy_colors/TheColors.sol';
+import '../legacy_colors/INFTOwner.sol';
 
 /**
  * @title TheSpirals contract
