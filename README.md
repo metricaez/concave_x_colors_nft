@@ -1,6 +1,6 @@
 # Concave Spoons
 
-To be as faithfull as possible to the original ***TheColors*** the aquitecture of ***ConcaveSpoons*** will be the following:
+To be as faithfull as possible to the original ***TheColors*** the architecture of ***ConcaveSpoons*** will be the following:
 
  - We maintain `TheColors` NFT contract as is with the following minor exception: minting cannot be done directly in that contract - but instead minting is done by `TheSpoons` contract. (corollary: upong minting a `TheSpoons` you also get a `TheColors`!)
  - The take `TheSpirals` contract and transform it into `TheSpoons`
