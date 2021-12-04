@@ -6,17 +6,21 @@ We need to generate the custom concave nft based on THE COLOR primitive. So you 
 
 Testing on localhost:
 
-`npx hardhat node`
-`npx hardhat run scripts/deploy_colors.js --network localhost`
-`npx hardhat console --network localhost`
+```
+npx hardhat node
+npx hardhat run scripts/deploy_colors.js --network localhost
+npx hardhat console --network localhost
+```
 
 See https://docs.openzeppelin.com/learn/deploying-and-interacting
 and https://hardhat.org/getting-started/
 
 Testing on ropsten:
 
-`npx hardhat run scripts/deploy_colors.js --network ropsten`
-`npx hardhat run scripts/mint_the_colors.js --network ropsten`
+```
+npx hardhat run scripts/deploy_colors.js --network ropsten
+npx hardhat run scripts/mint_the_colors.js --network ropsten
+```
 
 ### Frontend React
 
@@ -27,7 +31,7 @@ See instructions in frontend folder
  - [x] Upload THE COLOR contract
  - [x] Make a web site to mint THE COLOR primitive
  - [ ] Make a fancy landing page
- - [x] Create basic concave related SVG (in the format of <svg fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500" style="backgrond-color:#85fbae" SOME PATH here />
+ - [x] Create basic concave related SVG
  - [ ] Create fancy svg with animation
  - [x] Create basic contract that will generate svg
  - [ ] Create nft contract that will generate concave nft based on the primitive in the wallet
