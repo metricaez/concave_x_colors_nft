@@ -2,7 +2,17 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, ensure you have compiled the solidity contracts from the parent directory. After doing that, you must copy the generated artifacts into the frontend directory.
+
+```
+# To compile artifacts
+cd $REPO_ROOT
+npx hardhat compile
+# Copy artifacts
+cp -r $REPO_ROOT/artifacts $REPO_ROOT/frontend/artifacts/
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
