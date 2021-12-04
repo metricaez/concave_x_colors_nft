@@ -1,46 +1,36 @@
-# Concave Spoons
+## Conccave NFT Project
 
-***Traits***
-```json
-"spoon": {
-  "Diamond": 1,
-  "Platinum": 3,
-  "Gold": 5,
-  "Silver": 10,
-  "Bronze": 15,
-  "Wooden": 8,
-  "Plastic": 38,
-},
-"role": {
-    "Operators": 1,
-    "Documentators": 2,
-    "Spelunkers": 5,
-    "Witness": 3,
-    "Genesis": 16,
-    "Surveyors": 5,
-    "Foreman": 10,
-    "Hentai": 10,
-    "Explorer": 5,
-    "Seismologist": 16,
-    "Miners": 20,
-    "Cave Troll": 5,
-    "Core": 1,
-    "Inspector": 1
-},
-```
+We need to generate the custom concave nft based on THE COLOR primitive. So you should have the THE COLOR primitive in the wallet to generate concave nft. The primitive will change the concave nft color.
 
-# Basic Sample Hardhat Project
+### Bakend Hardhat
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+Testing on localhost:
 
-Try running some of the following tasks:
+`npx hardhat node`
+`npx hardhat run scripts/deploy_colors.js --network localhost`
+`npx hardhat console --network localhost`
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+See https://docs.openzeppelin.com/learn/deploying-and-interacting
+and https://hardhat.org/getting-started/
+
+Testing on ropsten:
+
+`npx hardhat run scripts/deploy_colors.js --network ropsten`
+`npx hardhat run scripts/mint_the_colors.js --network ropsten`
+
+### Frontend React
+
+See instructions in frontend folder
+
+### Todo
+
+ - [x] Upload THE COLOR contract
+ - [x] Make a web site to mint THE COLOR primitive
+ - [ ] Make a fancy landing page
+ - [x] Create basic concave related SVG (in the format of <svg fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500" style="backgrond-color:#85fbae" SOME PATH here />
+ - [ ] Create fancy svg with animation
+ - [x] Create basic contract that will generate svg
+ - [ ] Create nft contract that will generate concave nft based on the primitive in the wallet
+ - [ ] Upload to rinkeby
+ - [ ] View on OpenSea
+ - [ ] Upload to ETH and mint on original THE COLOR primitive
