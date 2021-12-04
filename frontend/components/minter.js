@@ -35,7 +35,7 @@ export const Minter = () => {
 
       const svgs = [];
       for (const i = 0; i < colorsCount; ++i) {
-        const tokenId = await contract.methods.tokenOfOwnerByIndex(address, web3.eth.abi.encodeParameter('uint256',i)).call()
+        const tokenId = await contract.methods.tokenOfOwnerByIndex(accounts[0], web3.eth.abi.encodeParameter('uint256',i)).call()
         const svg = await contract.methods.getTokenSVG(web3.eth.abi.encodeParameter('uint256',tokenId)).call()
         svgs.push(svg.replace(/"690"/g,"75", 'g'))
       }
