@@ -29,7 +29,7 @@ contract TheSpirals is ERC721Enumerable, Ownable {
 
     string public PROVENANCE_HASH = "";
 
-    address constant public THE_COLORS = address(0x9fdb31F8CE3cB8400C7cCb2299492F2A498330a4);
+    address constant public THE_COLORS = address(0x3C4CfA9540c7aeacBbB81532Eb99D5E870105CA9);
 
     mapping(uint256 => bool) public hasClaimed;
 

@@ -20,7 +20,7 @@ contract TheColors is ERC721Enumerable, Ownable {
 
     string public PROVENANCE_HASH = "";
 
-    address constant public THE_COLORS_LEGACY = address(0xc22f6c6f04c24Fac546A43Eb2E2eB10b1D2953DA);
+    /*address constant public THE_COLORS_LEGACY = address(0xc22f6c6f04c24Fac546A43Eb2E2eB10b1D2953DA);*/
 
     uint256 constant public MAX_COLORS = 4317;
 
@@ -145,15 +145,17 @@ contract TheColors is ERC721Enumerable, Ownable {
     /**
     * Mints The Colors to The Colors Legacy holders
     */
-    function mintNextColors(uint256 numberOfTokens) public onlyOwner {
+    function mintNextColors(uint256 numberOfTokens) public {
         require(totalSupply() + numberOfTokens <= MAX_COLORS, "Purchase would exceed max supply of Colors");
 
         uint256 mintIndex;
-        address tokenOwner;
+        /*address tokenOwner;*/
         for(uint i = 0; i < numberOfTokens; i++) {
             mintIndex = totalSupply();
 
             if (totalSupply() < MAX_COLORS) {
+                /*tokenOwner = INFTOwner(THE_COLORS_LEGACY).ownerOf(mintIndex);*/
+                
                 _safeMint(msg.sender, mintIndex);
                 generateRandomHexColor(mintIndex);
             }
