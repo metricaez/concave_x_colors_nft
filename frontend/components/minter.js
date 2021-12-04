@@ -3,34 +3,11 @@ import TheColors from '../../artifacts/contracts/legacy_colors/TheColors.sol/The
 import React, {useState, useEffect} from 'react';
 import Web3 from 'web3';
 
-const contractABI = [
-  {
-    "constant":true,
-    "inputs":[{"name":"_owner","type":"address"}],
-    "name":"balanceOf",
-    "outputs":[{"name":"balance","type":"uint256"}],
-    "type":"function"
-  },
-  {
-    "constant":true,
-    "inputs":[],
-    "name":"decimals",
-    "outputs":[{"name":"","type":"uint8"}],
-    "type":"function"
-  },
-  {
-    "constant":true,
-    "inputs":[{"name":"tokenId","type":"uint256"}],
-    "name":"ownerOf",
-    "outputs":[{"name":"owner","type":"address"}],
-    "type":"function"
-  }
-];
-
 export const Minter = () => {
 
   const COLORS_CONTRACT = '0x3C4CfA9540c7aeacBbB81532Eb99D5E870105CA9'
   const [web3, setWeb3] = useState(null)
+  const [svgs, setSvgs] = useState(null)
   const [address, setAddress] = useState(null)
   const [network, setNetwork] = useState(null)
   const [colorsOwned, setColorsOwned] = useState(null)
@@ -41,6 +18,8 @@ export const Minter = () => {
     const accounts = await ethereum.request({ method: "eth_requestAccounts" })
     setAddress(accounts[0])
 
+    setSvgs([]);
+
     const web3 = new Web3(ethereum)
     setWeb3(web3)
 
@@ -48,9 +27,20 @@ export const Minter = () => {
     if (networkName === "main")   setNetwork("Mainnet")
     else setNetwork(networkName)
 
-    const contract = new web3.eth.Contract(contractABI, COLORS_CONTRACT);
+    const contract = new web3.eth.Contract(TheColors.abi, COLORS_CONTRACT);
     const colorsCount = await contract.methods.balanceOf(accounts[0]).call()
     setColorsOwned(colorsCount)
+
+    if (colorsCount > 0) {
+
+      const svgs = [];
+      for (const i = 0; i < colorsCount; ++i) {
+        const tokenId = await contract.methods.tokenOfOwnerByIndex(address, web3.eth.abi.encodeParameter('uint256',i)).call()
+        const svg = await contract.methods.getTokenSVG(web3.eth.abi.encodeParameter('uint256',tokenId)).call()
+        svgs.push(svg.replace(/"690"/g,"75", 'g'))
+      }
+      setSvgs(svgs)
+    }
 
   }, []);
 
@@ -77,8 +67,18 @@ export const Minter = () => {
           <p className={"text-red-600 font-bold"}>{address} owns {colorsOwned} Colors NFT on {network}</p>
           <div className={"content-center flex"}>
             <button onClick={triggerMint} className={"bg-blue-500 mx-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}>
-              Mint!
+              Mint a Colors NFT!
             </button>
+
+            
+          </div>
+          <div>
+            <p>Your Colors:</p>
+            <div className={"flex colors"}>
+            {svgs && svgs.map(svg => (
+              <div className={"mx-5"} dangerouslySetInnerHTML={{ __html: svg }} />
+            ))}
+            </div>
           </div>
         </div>
       );
@@ -87,7 +87,7 @@ export const Minter = () => {
         <div>
           <p className={"text-red-600 font-bold"}>You must own a Colors NFT to Mint!</p>
           <button onClick={triggerMint} className={"bg-blue-500 mx-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}>
-            Mint a COLORS NFT
+            Mint a Colors NFT!
           </button>
         </div>
 

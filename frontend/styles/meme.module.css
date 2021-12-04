@@ -35,6 +35,14 @@
   justify-content: center;
   align-items: center;
 }
+.color {
+  width: 75px;
+  height: 75px;
+}
+.color svg {
+  width: 100%;
+  max-width: 100%;
+}
 
 .footer a {
   display: flex;
