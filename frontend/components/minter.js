@@ -64,7 +64,7 @@ export const Minter = () => {
       'nonce': nonce,
       //"value": web3.utils.toWei('.01','ether'),
       'gas': 500000,
-      'data': contract.methods.mintNextColors(5).encodeABI()
+      'data': contract.methods.mintNextColors(web3.eth.abi.encodeParameter('uint256',1)).encodeABI()
     };
 
     await web3.eth.sendTransaction(tx, address).catch()
