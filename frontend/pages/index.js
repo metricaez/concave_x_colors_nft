@@ -5,6 +5,9 @@ import { MetaHead } from '../components/head'
 import { Minter } from '../components/minter'
 
 export default function Home() {
+  function componentDidMount() {
+    document.querySelector("body").classList.add('body')
+  }
 
   return (
     <div className={styles.mainContainer}>
