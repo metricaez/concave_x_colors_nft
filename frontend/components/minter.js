@@ -29,7 +29,7 @@ const contractABI = [
 
 export const Minter = () => {
 
-  const COLORS_CONTRACT = '0x2c18BCab190A39b82126CB421593706067A57395'
+  const COLORS_CONTRACT = '0x3C4CfA9540c7aeacBbB81532Eb99D5E870105CA9'
   const [web3, setWeb3] = useState(null)
   const [address, setAddress] = useState(null)
   const [network, setNetwork] = useState(null)
