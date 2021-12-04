@@ -17,7 +17,7 @@ contract TheConcaveNFT is ERC721Enumerable, Ownable {
 
   }
 
-  function mintNFT(string memory svg) public {
+  function mintNFT() public {
     _safeMint(msg.sender, tokenCounter);
      tokenCounter = tokenCounter + 1;
   }
