@@ -30,15 +30,23 @@ async function main() {
 
   // let meta = await spoons.getTokenMetadata(1);
   // console.log(meta)
-  let svg = await spoons.getTokenSVG(1);
-  console.log(svg)
-  console.log('---')
-  // meta = await spoons.getTokenMetadata(2);
-  // console.log(meta)
-  svg = await spoons.getTokenSVG(2);
-  console.log(svg)
-  // await greeter.deployed();
-  console.log('passed')
+  // let svg = await spoons.getTokenSVG(1);
+  // console.log(svg)
+  // console.log('---')
+  // // meta = await spoons.getTokenMetadata(2);
+  // // console.log(meta)
+  // svg = await spoons.getTokenSVG(2);
+  // console.log(svg)
+  // svg = await spoons.getTokenSVG(2);
+  // console.log(svg)
+  // // await greeter.deployed();
+  // console.log('passed')
+  for (var i = 0; i < 5; i++) {
+    await spoons.mintSpoon(1);
+    // await spoons.getTokenMetadata(i);
+    let svg = await spoons.getTokenSVG(i);
+    console.log(svg)
+  }
   // console.log("Greeter deployed to:", greeter.address);
 }
 

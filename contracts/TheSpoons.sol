@@ -455,7 +455,7 @@ contract TheSpoons is ERC721Enumerable, Ownable {
       SpoonTraits memory traits = generateTraits(tokenId, r, g, b);
       string memory role = getRole(traits.role);
       string memory opposite = generateOppositeColor(r, g, b);
-      return ITheSpoonsSVG(THE_SPOONS_SVG).generateSVGImage(tokenId,hexCode,role,opposite);
+      return ITheSpoonsSVG(THE_SPOONS_SVG).generateSVGImage(tokenId,hexCode,role,opposite,r,g,b);
     }
 
     // function generateSVGPartB(string memory pathD, uint8 strokeWidth, uint8 stepDuration, uint8 duration) internal view returns (bytes memory) {
