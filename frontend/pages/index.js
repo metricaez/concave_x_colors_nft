@@ -15,13 +15,28 @@ export default function Home() {
       <Navbar />
       <div className={styles.container}>
 
-        <main className={styles.main}>
-          <h1 className={styles.title}>
-            Welcome to <br /><a>Concave NFT Minting</a>
-          </h1>
+        <hero className={styles.hero}>
+          {/*<h1 className={styles.title}>*/}
+          {/*  Welcome to <br /><a>Concave NFT Minting</a>*/}
+          {/*</h1>*/}
 
-          <Minter />
-        </main>
+          {/*<Minter />*/}
+        </hero>
+          <herotext className={styles.herotext}>
+              100% on the Blockchain
+          </herotext>
+
+          <herotext2 className={styles.herotext2}>
+              A different kind of NFT
+          </herotext2>
+
+          <main className={styles.main}>
+              {/*<h1 className={styles.title}>*/}
+              {/*  Welcome to <br /><a>Concave NFT Minting</a>*/}
+              {/*</h1>*/}
+
+              {/*<Minter />*/}
+          </main>
 
         <Footer />
       </div>

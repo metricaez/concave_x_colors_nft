@@ -5,13 +5,60 @@
 
 .body {
   padding: 0;
-  margin: 0;
-  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
   Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   max-width: 2100px;
   margin: 0 auto;
 }
+
+/*added by heyjan for the hero styling*/
+
+.hero {
+  height: 60vh;
+  background: repeating-linear-gradient(-45deg, black, black 75px,
+  #10b881 0, #10b881 150px);
+  display: block;
+  min-height: 20vh;
+  background-size: 200% 200%;
+  animation: diagonal alternate 30s infinite;
+}
+@keyframes diagonal {
+  0% {background-position: 0% 50%}
+  100% {background-position: 100% 50%}
+}
+
+.herotext {
+  position: absolute;
+  top: 300px;
+  right: 200px ;
+  background: white;
+  text-align: center;
+  font-weight: 300;
+  color: #333;
+  font-size: 40px;
+  padding: 40px;
+  max-width: 50%;
+  margin: 100px auto 0;
+  /*box-shadow: 0 0 10px 10px rgba(0,0,0,0.125);*/
+}
+
+.herotext2 {
+  position: absolute;
+  top: 100px;
+  right: 800px ;
+  background: white;
+  text-align: center;
+  font-weight: 300;
+  color: #333;
+  font-size: 40px;
+  padding: 35px;
+  max-width: 50%;
+  margin: 100px auto 0;
+  /*box-shadow: 0 0 10px 10px rgba(0,0,0,0.125);*/
+}
+
+
+
 
 .main {
   min-height: 83vh;
@@ -23,9 +70,9 @@
   align-items: center;
 }
 
-.vertical {
-  align-items: top;
-}
+/*.vertical {*/
+/*  align-items: top;*/
+/*}*/ branch
 
 .footer {
   display: flex;

@@ -95,6 +95,9 @@ export const Minter = () => {
     }
   }
   return (
-    <p className={"text-red-600 font-bold"}>Please connect to Metamask</p>
+      <button
+          className='inline-flex bg-green-500 items-center mr-5 border-b-4
+               hover:border-8 border-black py-1 px-3 focus:outline-none rounded text-base mt-4 md:mt-0'>Connect Wallet
+      </button>
   )
 }
