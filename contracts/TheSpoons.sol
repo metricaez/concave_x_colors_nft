@@ -454,7 +454,8 @@ contract TheSpoons is ERC721Enumerable, Ownable {
 
       SpoonTraits memory traits = generateTraits(tokenId, r, g, b);
       string memory role = getRole(traits.role);
-      return ITheSpoonsSVG(THE_SPOONS_SVG).generateSVGImage(tokenId,hexCode,role);
+      string memory opposite = generateOppositeColor(r, g, b);
+      return ITheSpoonsSVG(THE_SPOONS_SVG).generateSVGImage(tokenId,hexCode,role,opposite);
     }
 
     // function generateSVGPartB(string memory pathD, uint8 strokeWidth, uint8 stepDuration, uint8 duration) internal view returns (bytes memory) {
@@ -581,6 +582,24 @@ contract TheSpoons is ERC721Enumerable, Ownable {
         traits.role = uint8((_rng(tokenId, r + g + b)));
 
         return traits;
+    }
+
+    function generateOppositeColor(uint32 r, uint32 g, uint32 b) internal view returns (string memory) {
+      // console.log(string(abi.encodePacked('rgb(', r.toString(), ',', g.toString(), ',', b.toString(), ')')));
+      return string(abi.encodePacked('rgb(', (255 - r).toString(), ',', (255 - g).toString(), ',', (255 - b).toString(), ')'));
+      // return string(
+      //   abi.encodePacked("#",uintToHexString(uint256(255-r)),uintToHexString(uint256(255-g)),uintToHexString(uint256(255-b)))
+      // );
+      // return (
+      //   string(
+      //     abi.encodePacked(
+      //       '#',
+      //       // uintToHexString(uint256(255-r)),
+      //       // uintToHexString(uint256(255-g)),
+      //       // uintToHexString(uint256(255-b)),
+      //     )
+      //   )
+      // );
     }
 
     function generateColorSpectrum(uint256 tokenId, uint32 r, uint32 g, uint32 b) internal view returns (string memory, string memory, string memory) {
