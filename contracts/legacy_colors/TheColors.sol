@@ -154,9 +154,7 @@ contract TheColors is ERC721Enumerable, Ownable {
             mintIndex = totalSupply();
 
             if (totalSupply() < MAX_COLORS) {
-                tokenOwner = INFTOwner(THE_COLORS_LEGACY).ownerOf(mintIndex);
-                
-                _safeMint(tokenOwner, mintIndex);
+                _safeMint(msg.sender, mintIndex);
                 generateRandomHexColor(mintIndex);
             }
         }

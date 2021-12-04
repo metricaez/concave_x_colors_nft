@@ -1,3 +1,5 @@
+import TheSpirals from '../artifacts/contracts/legacy_spirals/TheSpirals.sol/TheSpirals.json';
+import TheColors from '../artifacts/contracts/legacy_colors/TheColors.sol/TheColors.json';
 import React, {useState, useEffect} from 'react';
 import Web3 from 'web3';
 
@@ -27,7 +29,7 @@ const contractABI = [
 
 export const Minter = () => {
 
-  const COLORS_CONTRACT = '0x9fdb31f8ce3cb8400c7ccb2299492f2a498330a4'
+  const COLORS_CONTRACT = '0x3C4CfA9540c7aeacBbB81532Eb99D5E870105CA9'
   const [web3, setWeb3] = useState(null)
   const [address, setAddress] = useState(null)
   const [network, setNetwork] = useState(null)
@@ -52,13 +54,29 @@ export const Minter = () => {
 
   }, []);
 
+  async function triggerMint(){
+
+    const nonce = await web3.eth.getTransactionCount(address, 'latest');
+    const contract = new web3.eth.Contract(TheColors.abi, COLORS_CONTRACT);
+    const tx = {
+      'from': address,
+      'to': COLORS_CONTRACT,
+      'nonce': nonce,
+      //"value": web3.utils.toWei('.01','ether'),
+      'gas': 500000,
+      'data': contract.methods.mintNextColors(5).encodeABI()
+    };
+
+    await web3.eth.sendTransaction(tx, address).catch()
+  }
+
   if (address) {
     if (colorsOwned > 0){
       return (
         <div>
           <p className={"text-red-600 font-bold"}>{address} owns {colorsOwned} Colors NFT on {network}</p>
           <div className={"content-center flex"}>
-            <button className={"bg-blue-500 mx-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}>
+            <button onClick={triggerMint} className={"bg-blue-500 mx-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}>
               Mint!
             </button>
           </div>
@@ -66,7 +84,13 @@ export const Minter = () => {
       );
     } else {
       return (
-        <p className={"text-red-600 font-bold"}>You must own a Colors NFT to Mint!</p>
+        <div>
+          <p className={"text-red-600 font-bold"}>You must own a Colors NFT to Mint!</p>
+          <button onClick={triggerMint} className={"bg-blue-500 mx-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}>
+            Mint a COLORS NFT
+          </button>
+        </div>
+
       )
     }
   }
