@@ -1,4 +1,4 @@
-## Conccave NFT Project
+## Concave NFT Project (∞)
 
 We need to generate the custom concave nft based on THE COLOR primitive. So you should have the THE COLOR primitive in the wallet to generate concave nft. The primitive will change the concave nft color.
 
