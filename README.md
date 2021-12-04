@@ -24,7 +24,7 @@ npx hardhat run scripts/mint_the_colors.js --network ropsten
 
 ### Frontend React
 
-See instructions in frontend folder
+See instructions in frontend folder. Update next.config.js adn comment out base path and asset prefix.
 
 ### Todo
 

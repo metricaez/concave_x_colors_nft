@@ -1,5 +1,5 @@
-import TheSpirals from '../artifacts/contracts/legacy_spirals/TheSpirals.sol/TheSpirals.json';
-import TheColors from '../artifacts/contracts/legacy_colors/TheColors.sol/TheColors.json';
+import TheSpirals from '../../artifacts/contracts/legacy_spirals/TheSpirals.sol/TheSpirals.json';
+import TheColors from '../../artifacts/contracts/legacy_colors/TheColors.sol/TheColors.json';
 import React, {useState, useEffect} from 'react';
 import Web3 from 'web3';
 
