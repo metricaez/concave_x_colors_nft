@@ -6,14 +6,14 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3")
 const web3 = createAlchemyWeb3(API_URL)
 
-const contract = require("../artifacts/contracts/legacy_spirals/TheSpirals.sol/TheSpirals.json")
-const contractAddress = "0xbdCb79D27C9bDF3D04848D0c0753677C50c5FD61"
+const contract = require("../artifacts/contracts/legacy_spirals_ropsten/TheSpirals.sol/TheSpirals.json")
+const contractAddress = "0x2c18BCab190A39b82126CB421593706067A57395"
 const nftContract = new web3.eth.Contract(contract.abi, contractAddress)
 
 async function mintNFT(tokenId) {
   const nonce = await web3.eth.getTransactionCount(PUBLIC_KEY, "latest") //get latest nonce
 
-  n = 
+ 
   //the transaction
   const tx = {
     from: PUBLIC_KEY,
@@ -49,6 +49,7 @@ async function mintNFT(tokenId) {
     })
 }
 
+// Hardcoded for now -- must input the tokenId corresponding to COLORS
 mintNFT(
   web3.eth.abi.encodeParameter("uint256", "1")
 )
